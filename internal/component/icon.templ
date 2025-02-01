@@ -1,0 +1,29 @@
+package component
+
+import "embed"
+
+//go:embed icon/*
+var fs embed.FS
+var brokenIcon, _ = fs.ReadFile("icon/broken.svg")
+
+templ Icon(path string) {
+	{{ path = "icon/" + path + ".svg" }}
+	<div class="w-6 h-6">
+		if i, err := fs.ReadFile(path); err==nil {
+			@templ.Raw(string(i))
+		} else {
+			@templ.Raw(string(brokenIcon))
+		}
+	</div>
+}
+
+templ IconMini(path string) {
+	{{ path = "icon/" + path + ".svg" }}
+	<div class="w-4 h-4">
+		if i, err := fs.ReadFile(path); err==nil {
+			@templ.Raw(string(i))
+		} else {
+			@templ.Raw(string(brokenIcon))
+		}
+	</div>
+}

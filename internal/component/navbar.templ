@@ -1,0 +1,47 @@
+package component
+
+import "carshift/internal/db"
+
+templ Navbar() {
+	{{ l := ctx.Value("logged").(bool) }}
+	<div class="fixed z-10 shadow-sm navbar bg-base-300">
+		<div class="flex-1">
+			<a href="/" class="text-xl navbar-start w-fit btn btn-ghost">
+				@Icon("car")
+				CarShift
+			</a>
+		</div>
+		<div class="flex-none">
+			if l {
+				{{ u := ctx.Value("userdata").(db.User) }}
+				{{ iurl := "https://ui-avatars.com/api/?name=" + u.Firstname + " " + u.Lastname }}
+				<div class="dropdown dropdown-end">
+					<img tabindex="0" role="button" class="m-1 btn btn-circle" src={ iurl } alt="profile"/>
+					<ul tabindex="0" class="p-2 w-52 shadow-sm dropdown-content menu bg-base-200 rounded-box z-1">
+						<li>
+							<a href="/profile">
+								@IconMini("user")
+								Profile
+							</a>
+						</li>
+						<li>
+							<a href="/settings">
+								@IconMini("settings")
+								Settings
+							</a>
+						</li>
+						<div class="my-1 mx-1 h-0.5 divider"></div>
+						<li>
+							<a href="/logout">
+								@IconMini("logout")
+								Logout
+							</a>
+						</li>
+					</ul>
+				</div>
+			} else {
+				<a href="/login" class="btn btn-primary">Login</a>
+			}
+		</div>
+	</div>
+}

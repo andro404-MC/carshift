@@ -1,0 +1,26 @@
+package template
+
+import c "carshift/internal/component"
+
+templ Register() {
+	@Base("CarShift : Register", true) {
+		<h1 class="text-4xl font-bold">Register</h1>
+		<form hx-post="/register" hx-target="#hxtoast" class="grid gap-2">
+			@c.InputBasic("Username", "username", 5) {
+				@c.Icon("user")
+			}
+			@c.InputBasic("First name", "firstname", 2) {
+				@c.Icon("id")
+			}
+			@c.InputBasic("Last name", "lastname", 2) {
+				@c.Icon("id")
+			}
+			@c.InputPassword("Password", "password", true)
+			@c.InputPassword("Password Confirmation", "passwordcon", false)
+			<input type="submit" class="btn btn-primary" value="Register!"/>
+			<div class="text-center text-[12px]">
+				already registered ? <a href="/login" class="link link-primary">login</a>
+			</div>
+		</form>
+	}
+}

@@ -1,0 +1,61 @@
+package component
+
+import "fmt"
+
+templ InputBasic(placeholder string, name string, minlength int) {
+	<div>
+		<label class="w-full input validator">
+			{ children... }
+			<input type="text" placeholder={ placeholder } name={ name } minlength={ fmt.Sprint(minlength) } required/>
+		</label>
+	</div>
+}
+
+templ InputEmail(placeholder string, name string) {
+	<div>
+		<label class="w-full input validator">
+			@Icon("email")
+			<input type="email" placeholder={ placeholder } name={ name } required/>
+		</label>
+	</div>
+}
+
+templ InputPassword(placeholder string, name string, fullValidator bool) {
+	<div class="join" x-data="{ show: false }">
+		<div class="w-full">
+			<label class="w-full input validator join-item">
+				@Icon("key")
+				<input
+					:type="show ? 'text' : 'password'"
+					placeholder={ placeholder }
+					minlength="8"
+					if fullValidator {
+						pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+					}
+					name={ name }
+					required
+				/>
+			</label>
+			if fullValidator {
+				<p class="hidden validator-hint">
+					Must be more than 8 characters, including
+					<br/>
+					At least one number
+					<br/>
+					At least one lowercase letter
+					<br/>
+					At least one uppercase letter
+				</p>
+			}
+		</div>
+		<label class="btn btn-accent swap join-item">
+			<input type="checkbox" x-model="show"/>
+			<div class="swap-on">
+				@Icon("invisible")
+			</div>
+			<div class="swap-off">
+				@Icon("visible")
+			</div>
+		</label>
+	</div>
+}
