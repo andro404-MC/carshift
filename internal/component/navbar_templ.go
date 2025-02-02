@@ -60,7 +60,7 @@ func Navbar() templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "\" alt=\"profile\"><ul tabindex=\"0\" class=\"p-2 w-52 shadow-sm dropdown-content menu bg-base-200 rounded-box z-1\"><li><a href=\"/profile\">")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "\" alt=\"profile\"><ul tabindex=\"0\" class=\"p-2 w-52 shadow-sm dropdown-content menu bg-base-200 rounded-box z-1\"><li><a href=\"/me\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

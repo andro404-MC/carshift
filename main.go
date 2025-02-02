@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"log"
 	"net/http"
 
@@ -11,6 +12,9 @@ import (
 )
 
 func main() {
+	adr := flag.String("a", ":8000", "address")
+	flag.Parse()
+
 	db.Setup()
 	defer db.Close()
 	h.Setup()
@@ -31,25 +35,27 @@ func main() {
 
 	router.HandleFunc("GET /favicon.ico", view.ServeFavicon)
 	router.HandleFunc("GET /static/", view.ServeStaticFiles)
+	router.HandleFunc("GET /logout", h.EndSession)
 
 	// User routes
 	router.Handle("GET /", stackLogged(http.HandlerFunc(h.HandleHome)))
-	router.Handle("GET /logout", stackLogged(http.HandlerFunc(h.EndSession)))
+	router.Handle("GET /me", stackLogged(http.HandlerFunc(h.HandleProfileSelf)))
 
 	// Guest routes
 	router.Handle("GET /login", stackGuest(http.HandlerFunc(h.HandleLogin)))
 	router.Handle("GET /register", stackGuest(http.HandlerFunc(h.HandleRegister)))
+
 	router.Handle("POST /login", stackGuest(http.HandlerFunc(h.HandlePostLogin)))
 	router.Handle("POST /register", stackGuest(http.HandlerFunc(h.HandlePostRegister)))
 
 	server := http.Server{
-		Addr:    ":8000",
+		Addr:    *adr,
 		Handler: stackMain(router),
 	}
 
-	log.Println("SERVER: running on port", server.Addr)
+	log.Println("SERVER: running on", server.Addr)
 	err := server.ListenAndServe()
 	if err != nil {
-		log.Println(err)
+		log.Printf("SERVER: Error fetching user %v", err)
 	}
 }

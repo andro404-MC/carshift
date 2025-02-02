@@ -49,9 +49,9 @@ func HandlePostRegister(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Convert names to title case
-	firstname = strings.ToTitle(firstname)
-	lastname = strings.ToTitle(lastname)
+	// Convert names to proper format
+	firstname = misc.FormaterName(firstname)
+	lastname = misc.FormaterName(lastname)
 
 	// Verifying first & last name
 	if !misc.ValidateName(firstname) || !misc.ValidateName(lastname) {

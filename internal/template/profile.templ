@@ -1,0 +1,11 @@
+package template
+
+import "carshift/internal/db"
+
+templ Profile(u db.User) {
+	@Base(u.Firstname+" "+u.Lastname, false) {
+		<p>{ u.Username }</p>
+		<p>{ u.Firstname }</p>
+		<p>{ u.Lastname }</p>
+	}
+}

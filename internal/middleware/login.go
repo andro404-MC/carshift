@@ -2,6 +2,7 @@ package middleware
 
 import (
 	"context"
+	"database/sql"
 	"log"
 	"net/http"
 
@@ -51,6 +52,11 @@ func UserOnly(next http.Handler) http.Handler {
 
 		err := db.GetUser(&u)
 		if err != nil {
+			if err == sql.ErrNoRows {
+				http.Redirect(w, r, "/logout", http.StatusSeeOther)
+				return
+			}
+
 			log.Printf("SERVER: Error fetching user %v", err)
 			http.Error(w, "Internal Error", http.StatusInternalServerError)
 			return
