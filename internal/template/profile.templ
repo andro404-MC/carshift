@@ -1,11 +1,49 @@
 package template
 
 import "carshift/internal/db"
+import c "carshift/internal/component"
 
-templ Profile(u db.User) {
+templ Profile(u db.User, self bool) {
 	@Base(u.Firstname+" "+u.Lastname, false) {
-		<p>{ u.Username }</p>
-		<p>{ u.Firstname }</p>
-		<p>{ u.Lastname }</p>
+		{{ iurl := "https://ui-avatars.com/api/?name=" + u.Firstname + " " + u.Lastname }}
+		<div class="flex gap-7 px-6 m-auto w-full max-w-7xl min-h-full pt-22">
+			<div class="flex flex-col gap-5 w-3xs">
+				<img
+					class="m-auto w-full h-auto rounded-full shadow-lg shadow-info/40"
+					src={ iurl }
+					alt="profile"
+				/>
+				<div class="flex flex-col gap-2">
+					<div class="text-2xl font-bold truncate">{ u.Firstname + " " + u.Lastname }</div>
+					if self {
+						<a href="/" class="btn btn-sm btn-soft btn-info">Edit</a>
+					}
+					<div>
+						@icoText(u.Username, "user")
+						@icoText("emaildyali@gmail.com", "email")
+						@icoText("0612345678", "phone")
+					</div>
+				</div>
+			</div>
+			<div class="flex flex-col border grow card bg-base-200 border-base-300">
+				<div class="flex flex-row p-2 w-full bg-base-300">
+					<button class="btn btn-sm btn-info">add</button>
+				</div>
+				<div class="flex justify-center items-center grow">
+					<p>
+						Empty
+					</p>
+				</div>
+			</div>
+		</div>
 	}
+}
+
+templ icoText(text string, ico string) {
+	<div class="flex flex-row gap-1 items-center">
+		<span class="text-info">
+			@c.IconMini(ico)
+		</span>
+		<span class="font-thin text-neutral-content">{ text }</span>
+	</div>
 }

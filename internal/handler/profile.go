@@ -16,5 +16,5 @@ func HandleProfileSelf(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	template.Profile(u).Render(r.Context(), w)
+	template.Profile(u, true).Render(r.Context(), w)
 }

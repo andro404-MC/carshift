@@ -103,6 +103,14 @@ func HandlePostRegister(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// Session renew
+	err = SM.RenewToken(r.Context())
+	if err != nil {
+		log.Printf("SCS: Error session renew %v", err)
+		template.AlertError("internal error").Render(r.Context(), w)
+		return
+	}
+
 	SM.Put(r.Context(), "userId", u.Id)
 	w.Header().Set("HX-Redirect", "/")
 }

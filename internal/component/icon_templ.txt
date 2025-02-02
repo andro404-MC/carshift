@@ -1,4 +1,0 @@
-<div class=\"w-6 h-6\">
-</div>
-<div class=\"w-4 h-4\">
-</div>

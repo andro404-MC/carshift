@@ -6,7 +6,7 @@ import (
 	"unicode"
 )
 
-var usernamePattern = regexp.MustCompile("^[a-zA-Z0-9_]{5,25}$")
+var usernamePattern = regexp.MustCompile("^[a-zA-Z0-9_]{4,25}$")
 
 func ValidateUsername(t string) bool {
 	return usernamePattern.MatchString(t)
