@@ -20,15 +20,26 @@ templ Profile(u db.User, self bool) {
 					}
 					<div>
 						@icoText(u.Username, "user")
-						@icoText("emaildyali@gmail.com", "email")
-						@icoText("0612345678", "phone")
+						@icoText(u.Email, "email")
+						@icoText(u.Phone, "phone")
 					</div>
 				</div>
 			</div>
 			<div class="flex flex-col border grow card bg-base-200 border-base-300">
-				<div class="flex flex-row p-2 w-full bg-base-300">
-					<button class="btn btn-sm btn-info">add</button>
-				</div>
+				if self {
+					<div class="grid grid-cols-2 p-2 w-full bg-base-300">
+						<div class="flex flex-row">
+							<button class="btn btn-xs btn-accent btn-square">
+								@c.IconMini("sort")
+							</button>
+						</div>
+						<div class="flex flex-row-reverse">
+							<button class="btn btn-xs btn-accent btn-square">
+								@c.IconMini("add")
+							</button>
+						</div>
+					</div>
+				}
 				<div class="flex justify-center items-center grow">
 					<p>
 						Empty
@@ -40,6 +51,15 @@ templ Profile(u db.User, self bool) {
 }
 
 templ icoText(text string, ico string) {
+	if text=="" {
+		<div class="flex flex-row gap-1 items-center">
+			<span class="text-info">
+				@c.IconMini(ico)
+			</span>
+			<span class="font-thin text-neutral-content">Not provided</span>
+		</div>
+		{{ return }}
+	}
 	<div class="flex flex-row gap-1 items-center">
 		<span class="text-info">
 			@c.IconMini(ico)

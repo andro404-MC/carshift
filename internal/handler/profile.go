@@ -11,10 +11,61 @@ import (
 func HandleProfileSelf(w http.ResponseWriter, r *http.Request) {
 	u, ok := r.Context().Value("userdata").(db.User)
 	if !ok {
-		log.Println("SERVER: error fetching prop logged")
+		log.Println("SERVER: error fetching prop userdata")
 		http.Error(w, "Internal Error", http.StatusInternalServerError)
 		return
 	}
 
 	template.Profile(u, true).Render(r.Context(), w)
+}
+
+func HandleProfile(w http.ResponseWriter, r *http.Request) {
+	l, ok := r.Context().Value("logged").(bool)
+	if !ok {
+		log.Println("SERVER: error fetching prop logged")
+		http.Error(w, "Internal Error", http.StatusInternalServerError)
+		return
+	}
+
+	u := db.User{
+		Username: r.PathValue("username"),
+	}
+
+	e, err := db.IsUserExists(u.Username)
+	if err != nil {
+		log.Printf("DB: Error checking user existence: %v", err)
+		template.AlertError("internal error").Render(r.Context(), w)
+		return
+	}
+
+	// Cheching if username exists
+	if !e {
+		http.NotFound(w, r)
+		return
+	}
+
+	// Fetching user
+	err = db.FetchUser(&u)
+	if err != nil {
+		log.Printf("DB: Error fetching user: %v", err)
+		template.AlertError("internal error").Render(r.Context(), w)
+		return
+	}
+
+	// Checking if you are checking ;)
+	if l {
+		meu, ok := r.Context().Value("userdata").(db.User)
+		if !ok {
+			log.Println("SERVER: error fetching prop logged")
+			http.Error(w, "Internal Error", http.StatusInternalServerError)
+			return
+		}
+
+		if meu.Id == u.Id {
+			http.Redirect(w, r, "/me", http.StatusSeeOther)
+			return
+		}
+	}
+
+	template.Profile(u, false).Render(r.Context(), w)
 }

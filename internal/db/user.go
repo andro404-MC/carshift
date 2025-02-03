@@ -45,7 +45,7 @@ func AddUser(u *User) error {
 	return err
 }
 
-func GetUser(u *User) error {
+func FetchUser(u *User) error {
 	if u.Username != "" {
 		err := DB.QueryRow("SELECT * FROM user WHERE user_name=$1", u.Username).
 			Scan(&u.Id, &u.Username, &u.Firstname, &u.Lastname, &u.Passhash, &u.Phone, &u.Email)

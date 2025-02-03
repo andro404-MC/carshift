@@ -25,11 +25,11 @@ func main() {
 		h.SM.LoadAndSave,
 	)
 	stackLogged := m.Stack(
-		m.CheckLogin,
+		m.FetchLogin,
 		m.UserOnly,
 	)
 	stackGuest := m.Stack(
-		m.CheckLogin,
+		m.FetchLogin,
 		m.GuestOnly,
 	)
 
@@ -37,8 +37,11 @@ func main() {
 	router.HandleFunc("GET /static/", view.ServeStaticFiles)
 	router.HandleFunc("GET /logout", h.EndSession)
 
+	// Everyones routes
+	router.Handle("GET /", m.FetchLogin(http.HandlerFunc(h.HandleHome)))
+	router.Handle("GET /profile/{username}", m.FetchLogin(http.HandlerFunc(h.HandleProfile)))
+
 	// User routes
-	router.Handle("GET /", stackLogged(http.HandlerFunc(h.HandleHome)))
 	router.Handle("GET /me", stackLogged(http.HandlerFunc(h.HandleProfileSelf)))
 
 	// Guest routes

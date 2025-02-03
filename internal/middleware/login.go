@@ -10,9 +10,29 @@ import (
 	"carshift/internal/handler"
 )
 
-func CheckLogin(next http.Handler) http.Handler {
+func FetchLogin(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		ctx := context.WithValue(r.Context(), "logged", handler.IsLogged(r.Context()))
+		l := handler.IsLogged(r.Context())
+		ctx := context.WithValue(r.Context(), "logged", l)
+
+		if l {
+			u := db.User{Id: handler.SM.GetInt(r.Context(), "userId")}
+
+			err := db.FetchUser(&u)
+			if err != nil {
+				if err == sql.ErrNoRows {
+					http.Redirect(w, r, "/logout", http.StatusSeeOther)
+					return
+				}
+
+				log.Printf("SERVER: Error fetching user %v", err)
+				http.Error(w, "Internal Error", http.StatusInternalServerError)
+				return
+			}
+
+			ctx = context.WithValue(ctx, "userdata", u)
+		}
+
 		next.ServeHTTP(w, r.WithContext(ctx))
 	})
 }
@@ -48,21 +68,6 @@ func UserOnly(next http.Handler) http.Handler {
 			return
 		}
 
-		u := db.User{Id: handler.SM.GetInt(r.Context(), "userId")}
-
-		err := db.GetUser(&u)
-		if err != nil {
-			if err == sql.ErrNoRows {
-				http.Redirect(w, r, "/logout", http.StatusSeeOther)
-				return
-			}
-
-			log.Printf("SERVER: Error fetching user %v", err)
-			http.Error(w, "Internal Error", http.StatusInternalServerError)
-			return
-		}
-
-		ctx := context.WithValue(r.Context(), "userdata", u)
-		next.ServeHTTP(w, r.WithContext(ctx))
+		next.ServeHTTP(w, r)
 	})
 }

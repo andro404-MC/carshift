@@ -3,7 +3,7 @@ package template
 import c "carshift/internal/component"
 
 templ Login() {
-	@Base("CarShift : Login", true) {
+	@Base("Login", true) {
 		<h1 class="text-4xl font-bold">Login</h1>
 		<form hx-post="/login" hx-target="#hxtoast" class="grid gap-2">
 			@c.InputBasic("Username", "username", 4) {
