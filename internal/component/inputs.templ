@@ -21,12 +21,12 @@ templ InputEmail(placeholder string, name string) {
 }
 
 templ InputPassword(placeholder string, name string, fullValidator bool) {
-	<div class="join" x-data="{ show: false }">
+	<div>
 		<div class="w-full">
-			<label class="w-full input validator join-item">
+			<label class="w-full input validator">
 				@Icon("key")
 				<input
-					:type="show ? 'text' : 'password'"
+					type="password"
 					placeholder={ placeholder }
 					minlength="8"
 					if fullValidator {
@@ -48,14 +48,5 @@ templ InputPassword(placeholder string, name string, fullValidator bool) {
 				</p>
 			}
 		</div>
-		<label class="btn btn-accent swap join-item">
-			<input type="checkbox" x-model="show"/>
-			<div class="swap-on">
-				@Icon("invisible")
-			</div>
-			<div class="swap-off">
-				@Icon("visible")
-			</div>
-		</label>
 	</div>
 }

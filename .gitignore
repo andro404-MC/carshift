@@ -1,9 +1,9 @@
+node_modules/
+tmp/
+build/
 .env
-./tmp
-*.db
 go.sum
 package-lock.json
-node_modules/
-build/
+*.db
 *_templ.txt
 *_templ.go

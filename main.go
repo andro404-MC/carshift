@@ -37,12 +37,14 @@ func main() {
 	router.HandleFunc("GET /static/", view.ServeStaticFiles)
 	router.HandleFunc("GET /logout", h.EndSession)
 
-	// Everyones routes
+	// OUR routes
 	router.Handle("GET /", m.FetchLogin(http.HandlerFunc(h.HandleHome)))
 	router.Handle("GET /profile/{username}", m.FetchLogin(http.HandlerFunc(h.HandleProfile)))
 
 	// User routes
 	router.Handle("GET /me", stackLogged(http.HandlerFunc(h.HandleProfileSelf)))
+	router.Handle("GET /settings", stackLogged(http.HandlerFunc(h.HandleSettings)))
+	router.Handle("GET /settings/{tab}", stackLogged(http.HandlerFunc(h.HandleSettingsTabs)))
 
 	// Guest routes
 	router.Handle("GET /login", stackGuest(http.HandlerFunc(h.HandleLogin)))

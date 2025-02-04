@@ -1,0 +1,23 @@
+package template
+
+templ Tabbed(tabs []Tab, selected int, target string) {
+	<div role="tablist" class="tabs tabs-border">
+		for i,v := range(tabs) {
+			<button
+				role="tab"
+				hx-target={ target }
+				hx-get={ v.URL }
+				if i==selected {
+					class="tab tab-active"
+				} else {
+					class="tab"
+				}
+			>
+				{ v.Name }
+			</button>
+		}
+	</div>
+	<div class="p-10 bg-base-200 border-base-300">
+		@tabs[selected].Content
+	</div>
+}

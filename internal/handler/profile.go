@@ -34,7 +34,7 @@ func HandleProfile(w http.ResponseWriter, r *http.Request) {
 	e, err := db.IsUserExists(u.Username)
 	if err != nil {
 		log.Printf("DB: Error checking user existence: %v", err)
-		template.AlertError("internal error").Render(r.Context(), w)
+		http.Error(w, "Internal Error", http.StatusInternalServerError)
 		return
 	}
 
@@ -48,7 +48,7 @@ func HandleProfile(w http.ResponseWriter, r *http.Request) {
 	err = db.FetchUser(&u)
 	if err != nil {
 		log.Printf("DB: Error fetching user: %v", err)
-		template.AlertError("internal error").Render(r.Context(), w)
+		http.Error(w, "Internal Error", http.StatusInternalServerError)
 		return
 	}
 
