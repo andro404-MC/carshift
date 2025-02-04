@@ -6,10 +6,10 @@ templ Login() {
 	@Base("Login", true) {
 		<h1 class="text-4xl font-bold">Login</h1>
 		<form hx-post="/login" hx-target="#hxtoast" class="grid gap-2">
-			@c.InputBasic("Username", "username", 4) {
+			@c.InputBasic("", "Username", "username", 4) {
 				@c.Icon("user")
 			}
-			@c.InputPassword("Password", "password", false)
+			@c.InputPassword("", "Password", "password", false)
 			<input type="submit" class="btn btn-primary" value="Login"/>
 			<div class="text-center text-[12px]">
 				not registered ? register <a href="/register" class="link link-primary">now</a>!!

@@ -2,31 +2,45 @@ package component
 
 import "fmt"
 
-templ InputBasic(placeholder string, name string, minlength int) {
+templ InputBasic(value string, placeholder string, name string, minlength int) {
 	<div>
 		<label class="w-full input validator">
 			{ children... }
-			<input type="text" placeholder={ placeholder } name={ name } minlength={ fmt.Sprint(minlength) } required/>
+			<input
+				type="text"
+				value={ value }
+				placeholder={ placeholder }
+				name={ name }
+				minlength={ fmt.Sprint(minlength) }
+				required
+			/>
 		</label>
 	</div>
 }
 
-templ InputEmail(placeholder string, name string) {
+templ InputEmail(value string, placeholder string, name string) {
 	<div>
 		<label class="w-full input validator">
 			@Icon("email")
-			<input type="email" placeholder={ placeholder } name={ name } required/>
+			<input
+				type="email"
+				value={ value }
+				placeholder={ placeholder }
+				name={ name }
+				required
+			/>
 		</label>
 	</div>
 }
 
-templ InputPassword(placeholder string, name string, fullValidator bool) {
+templ InputPassword(value string, placeholder string, name string, fullValidator bool) {
 	<div>
 		<div class="w-full">
 			<label class="w-full input validator">
 				@Icon("key")
 				<input
 					type="password"
+					value={ value }
 					placeholder={ placeholder }
 					minlength="8"
 					if fullValidator {

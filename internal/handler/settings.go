@@ -8,7 +8,7 @@ import (
 )
 
 var tabs = []template.Tab{
-	{Name: "Profile", Content: template.AlertError("Profile"), URL: "/settings/0"},
+	{Name: "Profile", Content: template.SettingsProfie(), URL: "/settings/0"},
 	{Name: "Account", Content: template.AlertError("Account"), URL: "/settings/1"},
 }
 

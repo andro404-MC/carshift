@@ -1,9 +1,29 @@
 package template
 
+import "carshift/internal/db"
+
+import c "carshift/internal/component"
+
 templ Settings() {
 	@Base("Settings", false) {
 		<div class="p-5 pt-22" id="settings-tabs">
 			<div hx-get="/settings/0" hx-trigger="load" hx-swap="outerHTML" hx-target="this"></div>
 		</div>
 	}
+}
+
+templ SettingsProfie() {
+	{{ u := ctx.Value("userdata").(db.User) }}
+	<form method="post" class="grid gap-2">
+		@c.InputBasic(u.Username, "Username", "username", 4) {
+			@c.Icon("user")
+		}
+		@c.InputBasic(u.Firstname, "First name", "firstname", 2) {
+			@c.Icon("id")
+		}
+		@c.InputBasic(u.Lastname, "Last name", "lastname", 2) {
+			@c.Icon("id")
+		}
+		<input type="submit" class="btn btn-primary" value="Save"/>
+	</form>
 }

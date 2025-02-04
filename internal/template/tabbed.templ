@@ -6,7 +6,7 @@ templ Tabbed(tabs []Tab, selected int, target string) {
 			<button
 				role="tab"
 				hx-target={ target }
-				hx-get={ v.URL }
+				hx-get={ string(templ.URL(v.URL)) }
 				if i==selected {
 					class="tab tab-active"
 				} else {
