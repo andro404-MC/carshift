@@ -25,16 +25,16 @@ templ Profile(u db.User, self bool) {
 					</div>
 				</div>
 			</div>
-			<div class="flex flex-col border grow card bg-base-200 border-base-300">
+			<div class="flex overflow-hidden flex-col grow card bg-base-200">
 				if self {
 					<div class="grid grid-cols-2 p-2 w-full bg-base-300">
 						<div class="flex flex-row">
-							<button class="btn btn-xs btn-accent btn-square">
+							<button class="btn btn-xs btn-accent">
 								@c.IconMini("sort")
 							</button>
 						</div>
 						<div class="flex flex-row-reverse">
-							<button class="btn btn-xs btn-accent btn-square">
+							<button class="btn btn-xs btn-accent">
 								@c.IconMini("add")
 							</button>
 						</div>

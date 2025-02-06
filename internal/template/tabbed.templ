@@ -1,7 +1,7 @@
 package template
 
 templ Tabbed(tabs []Tab, selected int, target string) {
-	<div role="tablist" class="tabs tabs-border">
+	<div role="tablist" class="px-4 tabs tabs-border">
 		for i,v := range(tabs) {
 			<button
 				role="tab"
@@ -17,7 +17,7 @@ templ Tabbed(tabs []Tab, selected int, target string) {
 			</button>
 		}
 	</div>
-	<div class="p-10 bg-base-200 border-base-300">
+	<div class="py-3 px-4 sm:py-6 sm:px-8 card bg-base-200">
 		@tabs[selected].Content
 	</div>
 }

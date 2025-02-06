@@ -6,7 +6,7 @@ import c "carshift/internal/component"
 
 templ Settings() {
 	@Base("Settings", false) {
-		<div class="p-5 pt-22" id="settings-tabs">
+		<div class="px-5 pt-20" id="settings-tabs">
 			<div hx-get="/settings/0" hx-trigger="load" hx-swap="outerHTML" hx-target="this"></div>
 		</div>
 	}
@@ -14,16 +14,18 @@ templ Settings() {
 
 templ SettingsProfie() {
 	{{ u := ctx.Value("userdata").(db.User) }}
-	<form method="post" class="grid gap-2">
-		@c.InputBasic(u.Username, "Username", "username", 4) {
-			@c.Icon("user")
-		}
-		@c.InputBasic(u.Firstname, "First name", "firstname", 2) {
-			@c.Icon("id")
-		}
-		@c.InputBasic(u.Lastname, "Last name", "lastname", 2) {
-			@c.Icon("id")
-		}
-		<input type="submit" class="btn btn-primary" value="Save"/>
+	<form method="post" class="grid gap-3 w-full sm:w-xs">
+		<div>
+			<div class="mb-1 text-sm">Username</div>
+			@c.InputBasic(u.Username, "Username", "username", 4)
+		</div>
+		<div>
+			<div class="mb-1 text-sm">First name</div>
+			@c.InputBasic(u.Firstname, "First name", "firstname", 2)
+		</div>
+		<div>
+			<div class="mb-1 text-sm">Last name</div>
+			@c.InputBasic(u.Lastname, "Last name", "lastname", 2)
+		</div>
 	</form>
 }

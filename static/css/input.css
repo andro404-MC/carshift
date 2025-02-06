@@ -1,2 +1,4 @@
-@plugin "daisyui";
+@plugin "daisyui" {
+  themes: forest --default;
+}
 @import "tailwindcss" source("../../internal/**/*.{templ,html}");
