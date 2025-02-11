@@ -21,13 +21,30 @@ templ InputBasic(value string, placeholder string, name string, minlength int) {
 templ InputEmail(value string, placeholder string, name string) {
 	<div>
 		<label class="w-full input validator">
-			@Icon("email")
 			<input
 				type="email"
 				value={ value }
 				placeholder={ placeholder }
 				name={ name }
 				required
+			/>
+		</label>
+	</div>
+}
+
+templ InputPhone(value string, placeholder string, name string) {
+	<div>
+		<label class="w-full input validator">
+			<input
+				type="tel"
+				value={ value }
+				placeholder={ placeholder }
+				name={ name }
+				class="tabular-nums"
+				placeholder="Phone"
+				pattern="[0-9]*"
+				minlength="10"
+				maxlength="10"
 			/>
 		</label>
 	</div>

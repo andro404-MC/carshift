@@ -18,7 +18,7 @@ func FetchLogin(next http.Handler) http.Handler {
 		if l {
 			u := db.User{Id: handler.SM.GetInt(r.Context(), "userId")}
 
-			err := db.FetchUser(&u)
+			err := u.FetchUser()
 			if err != nil {
 				if err == sql.ErrNoRows {
 					http.Redirect(w, r, "/logout", http.StatusSeeOther)

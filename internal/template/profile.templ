@@ -6,8 +6,9 @@ import (
 )
 
 templ Profile(u db.User, self bool) {
+	{{ iurl := "https://ui-avatars.com/api/?name=" + u.Firstname + " " + u.Lastname }}
+	{{ logged := ctx.Value("logged").(bool) }}
 	@Base(u.Firstname+" "+u.Lastname, false) {
-		{{ iurl := "https://ui-avatars.com/api/?name=" + u.Firstname + " " + u.Lastname }}
 		<div class="flex gap-7 px-6 m-auto w-full max-w-7xl min-h-full pt-22">
 			<div class="flex flex-col gap-5 sm:w-4xs lg:w-3xs">
 				<img
@@ -22,8 +23,15 @@ templ Profile(u db.User, self bool) {
 					}
 					<div>
 						@icoText(u.Username, "user")
-						@icoText(u.Email, "email")
-						@icoText(u.Phone, "phone")
+						if logged {
+							@icoText(u.Email, "email")
+							@icoText(u.Phone, "phone")
+						} else {
+							<div class="select-none blur-sm">
+								@icoText("nice try diddy", "email")
+								@icoText("nice try diddy", "phone")
+							</div>
+						}
 					</div>
 				</div>
 			</div>

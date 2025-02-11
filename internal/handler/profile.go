@@ -45,7 +45,7 @@ func HandleProfile(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Fetching user
-	err = db.FetchUser(&u)
+	err = u.FetchUser()
 	if err != nil {
 		log.Printf("DB: Error fetching user: %v", err)
 		http.Error(w, "Internal Error", http.StatusInternalServerError)

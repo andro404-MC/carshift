@@ -33,7 +33,7 @@ func IsUserExists(username string) (bool, error) {
 	return false, nil
 }
 
-func AddUser(u *User) error {
+func (u *User) AddUser() error {
 	err := DB.QueryRow(`
   INSERT INTO user
     (user_name,user_firstname,user_lastname,user_passhash,user_phone,user_email)
@@ -45,7 +45,7 @@ func AddUser(u *User) error {
 	return err
 }
 
-func FetchUser(u *User) error {
+func (u *User) FetchUser() error {
 	if u.Username != "" {
 		err := DB.QueryRow("SELECT * FROM user WHERE user_name=$1", u.Username).
 			Scan(&u.Id, &u.Username, &u.Firstname, &u.Lastname, &u.Passhash, &u.Phone, &u.Email)

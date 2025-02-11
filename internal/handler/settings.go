@@ -8,8 +8,8 @@ import (
 )
 
 var tabs = []template.Tab{
-	{Name: "Profile", Content: template.SettingsProfie(), URL: "/settings/0"},
-	{Name: "Account", Content: template.AlertError("Account"), URL: "/settings/1"},
+	{Name: "Account", Content: template.SettingsAccount(), URL: "/settings/0"},
+	{Name: "Profile", Content: template.AlertError("Chkon 3raf"), URL: "/settings/1"},
 }
 
 func HandleSettings(w http.ResponseWriter, r *http.Request) {
