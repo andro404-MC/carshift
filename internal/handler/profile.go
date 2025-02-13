@@ -61,7 +61,7 @@ func HandleProfile(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		if meu.Id == u.Id {
+		if meu.ID == u.ID {
 			http.Redirect(w, r, "/me", http.StatusSeeOther)
 			return
 		}

@@ -73,6 +73,6 @@ func HandlePostLogin(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Registering session
-	SM.Put(r.Context(), "userId", u.Id)
+	SM.Put(r.Context(), "userId", u.ID)
 	w.Header().Set("HX-Redirect", "/")
 }

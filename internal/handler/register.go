@@ -111,6 +111,6 @@ func HandlePostRegister(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	SM.Put(r.Context(), "userId", u.Id)
+	SM.Put(r.Context(), "userId", u.ID)
 	w.Header().Set("HX-Redirect", "/")
 }

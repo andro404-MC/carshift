@@ -19,7 +19,7 @@ templ Register() {
 			@c.InputPassword("", "Password Confirmation", "passwordcon", false)
 			<input type="submit" class="btn btn-primary" value="Register!"/>
 			<div class="text-center text-[12px]">
-				already registered ? <a href="/login" class="link link-primary">login</a>
+				already registered ? <a href="/login" hx-boost="false" class="link link-primary">login</a>
 			</div>
 		</form>
 	}
