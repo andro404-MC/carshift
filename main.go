@@ -30,22 +30,19 @@ func main() {
 	}
 
 	router := http.NewServeMux()
-	stackMain := m.Stack(
-		m.Log,
-		h.SM.LoadAndSave,
-	)
-	stackLogged := m.Stack(
-		m.FetchLogin,
-		m.UserOnly,
-	)
-	stackGuest := m.Stack(
-		m.FetchLogin,
-		m.GuestOnly,
-	)
 
+	// Groups
+	stackMain := m.Stack(m.Log, h.SM.LoadAndSave)
+	stackLogged := m.Stack(m.FetchLogin, m.UserOnly)
+	stackGuest := m.Stack(m.FetchLogin, m.GuestOnly)
+
+	// Static and general stuff
 	router.HandleFunc("GET /favicon.ico", view.ServeFavicon)
 	router.HandleFunc("GET /static/", view.ServeStaticFiles)
 	router.HandleFunc("GET /logout", h.EndSession)
+
+	// HTMX thingys
+	router.HandleFunc("GET /htmx/alert", h.HtmxAlert)
 
 	// OUR routes
 	router.Handle("GET /", m.FetchLogin(http.HandlerFunc(h.HandleHome)))
@@ -59,7 +56,6 @@ func main() {
 	// Guest routes
 	router.Handle("GET /login", stackGuest(http.HandlerFunc(h.HandleLogin)))
 	router.Handle("GET /register", stackGuest(http.HandlerFunc(h.HandleRegister)))
-
 	router.Handle("POST /login", stackGuest(http.HandlerFunc(h.HandlePostLogin)))
 	router.Handle("POST /register", stackGuest(http.HandlerFunc(h.HandlePostRegister)))
 

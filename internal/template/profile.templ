@@ -27,7 +27,11 @@ templ Profile(u db.User, self bool) {
 							@icoText(u.Email, "email")
 							@icoText(u.Phone, "phone")
 						} else {
-							<div class="select-none blur-sm">
+							<div
+								hx-get="/htmx/alert?message=Login required to view contact info"
+								hx-target="#hxtoast"
+								class="cursor-pointer select-none blur-sm w-fit"
+							>
 								@icoText("nice try diddy", "email")
 								@icoText("nice try diddy", "phone")
 							</div>
