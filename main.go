@@ -5,6 +5,9 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/go-chi/chi/v5"
+	gm "github.com/go-chi/chi/v5/middleware"
+
 	"carshift/internal/db"
 	h "carshift/internal/handler"
 	m "carshift/internal/middleware"
@@ -13,9 +16,10 @@ import (
 
 func main() {
 	var err error
+	var adr string
 
 	// Flags
-	adr := flag.String("a", ":8000", "address")
+	flag.StringVar(&adr, "a", ":8000", "address")
 	flag.Parse()
 
 	// Setup
@@ -29,39 +33,55 @@ func main() {
 		return
 	}
 
-	router := http.NewServeMux()
-
-	// Groups
-	stackMain := m.Stack(m.Log, h.SM.LoadAndSave)
-	stackLogged := m.Stack(m.FetchLogin, m.UserOnly)
-	stackGuest := m.Stack(m.FetchLogin, m.GuestOnly)
+	r := chi.NewRouter()
+	r.Use(gm.Logger, h.SM.LoadAndSave)
 
 	// Static and general stuff
-	router.HandleFunc("GET /favicon.ico", view.ServeFavicon)
-	router.HandleFunc("GET /static/", view.ServeStaticFiles)
-	router.HandleFunc("GET /logout", h.EndSession)
+	r.Group(func(r chi.Router) {
+		r.Use(gm.Compress(5, "text/css", "text/javascript"))
+
+		r.Get("/favicon.ico", view.ServeFavicon)
+	})
 
 	// HTMX thingys
-	router.HandleFunc("GET /htmx/alert", h.HtmxAlert)
+	r.Group(func(r chi.Router) {
+		r.Get("/htmx/alert", h.HtmxAlert)
+	})
 
 	// OUR routes
-	router.Handle("GET /", m.FetchLogin(http.HandlerFunc(h.HandleHome)))
-	router.Handle("GET /profile/{username}", m.FetchLogin(http.HandlerFunc(h.HandleProfile)))
+	r.Group(func(r chi.Router) {
+		r.Use(m.FetchLogin)
+
+		r.Get("/", h.HandleHome)
+		r.Get("/profile/{username}", h.HandleProfile)
+	})
 
 	// User routes
-	router.Handle("GET /me", stackLogged(http.HandlerFunc(h.HandleProfileSelf)))
-	router.Handle("GET /settings", stackLogged(http.HandlerFunc(h.HandleSettings)))
-	router.Handle("GET /settings/{tab}", stackLogged(http.HandlerFunc(h.HandleSettingsTabs)))
+	r.Group(func(r chi.Router) {
+		r.Use(m.FetchLogin, m.UserOnly)
+
+		r.Get("/logout", h.EndSession)
+		r.Get("/me", h.HandleProfileSelf)
+		r.Get("/settings", h.HandleSettings)
+		r.Get("/settings/{tab}", h.HandleSettingsTabs)
+	})
 
 	// Guest routes
-	router.Handle("GET /login", stackGuest(http.HandlerFunc(h.HandleLogin)))
-	router.Handle("GET /register", stackGuest(http.HandlerFunc(h.HandleRegister)))
-	router.Handle("POST /login", stackGuest(http.HandlerFunc(h.HandlePostLogin)))
-	router.Handle("POST /register", stackGuest(http.HandlerFunc(h.HandlePostRegister)))
+	r.Group(func(r chi.Router) {
+		r.Use(m.FetchLogin, m.GuestOnly)
+
+		r.Get("/login", h.HandleLogin)
+		r.Get("/register", h.HandleRegister)
+		r.Post("/login", h.HandlePostLogin)
+		r.Post("/register", h.HandlePostRegister)
+	})
+
+	// Files serving
+	view.FileServer(r, "/static", "static")
 
 	server := http.Server{
-		Addr:    *adr,
-		Handler: stackMain(router),
+		Addr:    adr,
+		Handler: r,
 	}
 
 	log.Println("SERVER: running on", server.Addr)
