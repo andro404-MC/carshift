@@ -7,9 +7,9 @@ import (
 
 	"golang.org/x/crypto/bcrypt"
 
-	"carshift/internal/db"
-	"carshift/internal/misc"
-	"carshift/internal/template"
+	"github.com/untemi/carshift/internal/db"
+	"github.com/untemi/carshift/internal/misc"
+	"github.com/untemi/carshift/internal/template"
 )
 
 var loginDisable = 0

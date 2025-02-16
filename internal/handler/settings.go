@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"strconv"
 
-	"carshift/internal/template"
+	"github.com/untemi/carshift/internal/template"
 )
 
 var tabs = []template.Tab{

@@ -1,4 +1,4 @@
-module carshift
+module github.com/untemi/carshift
 
 go 1.24
 

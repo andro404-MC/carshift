@@ -7,8 +7,8 @@ import (
 
 	"golang.org/x/crypto/bcrypt"
 
-	"carshift/internal/db"
-	"carshift/internal/template"
+	"github.com/untemi/carshift/internal/db"
+	"github.com/untemi/carshift/internal/template"
 )
 
 func HandleLogin(w http.ResponseWriter, r *http.Request) {

@@ -8,10 +8,10 @@ import (
 	"github.com/go-chi/chi/v5"
 	gm "github.com/go-chi/chi/v5/middleware"
 
-	"carshift/internal/db"
-	h "carshift/internal/handler"
-	m "carshift/internal/middleware"
-	"carshift/internal/view"
+	"github.com/untemi/carshift/internal/db"
+	h "github.com/untemi/carshift/internal/handler"
+	m "github.com/untemi/carshift/internal/middleware"
+	"github.com/untemi/carshift/internal/view"
 )
 
 func main() {

@@ -4,8 +4,8 @@ import (
 	"log"
 	"net/http"
 
-	"carshift/internal/db"
-	"carshift/internal/template"
+	"github.com/untemi/carshift/internal/db"
+	"github.com/untemi/carshift/internal/template"
 )
 
 func HandleProfileSelf(w http.ResponseWriter, r *http.Request) {

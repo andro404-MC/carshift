@@ -1,6 +1,6 @@
 package db
 
-import "carshift/internal/misc"
+import "github.com/untemi/carshift/internal/misc"
 
 func IsUserExists(username string) (bool, error) {
 	tx := db.Limit(1).Where("Username = ?", username).Find(&User{})

@@ -3,7 +3,7 @@ package handler
 import (
 	"net/http"
 
-	"carshift/internal/template"
+	"github.com/untemi/carshift/internal/template"
 )
 
 func HtmxAlert(w http.ResponseWriter, r *http.Request) {

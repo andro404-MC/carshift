@@ -7,8 +7,8 @@ import (
 
 	"gorm.io/gorm"
 
-	"carshift/internal/db"
-	"carshift/internal/handler"
+	"github.com/untemi/carshift/internal/db"
+	"github.com/untemi/carshift/internal/handler"
 )
 
 func FetchLogin(next http.Handler) http.Handler {
