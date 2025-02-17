@@ -34,7 +34,7 @@ func main() {
 	}
 
 	r := chi.NewRouter()
-	r.Use(gm.Logger, h.SM.LoadAndSave)
+	r.Use(gm.Logger, gm.Recoverer, h.SM.LoadAndSave)
 
 	// Static and general stuff
 	r.Group(func(r chi.Router) {

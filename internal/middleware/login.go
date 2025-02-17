@@ -19,7 +19,7 @@ func FetchLogin(next http.Handler) http.Handler {
 		if l {
 			u := db.User{ID: handler.SM.GetInt(r.Context(), "userId")}
 
-			err := u.FetchUser()
+			err := u.Fill()
 			if err != nil {
 				if err == gorm.ErrRecordNotFound {
 					http.Redirect(w, r, "/logout", http.StatusSeeOther)

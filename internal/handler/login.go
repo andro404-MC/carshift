@@ -51,7 +51,7 @@ func HandlePostLogin(w http.ResponseWriter, r *http.Request) {
 
 	// Fetching user
 	u := db.User{Username: username}
-	err = u.FetchUser()
+	err = u.Fill()
 	if err != nil {
 		log.Printf("SERVER: Error fetching user %v", err)
 		template.AlertError("internal error").Render(r.Context(), w)

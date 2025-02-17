@@ -96,7 +96,8 @@ func HandlePostRegister(w http.ResponseWriter, r *http.Request) {
 		Lastname:  lastname,
 		Passhash:  string(hashedPassword),
 	}
-	err = u.AddUser()
+
+	err = db.AddUser(u)
 	if err != nil {
 		log.Printf("DB: Error creating user: %v", err)
 		template.AlertError("internal error").Render(r.Context(), w)
