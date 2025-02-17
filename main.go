@@ -38,8 +38,6 @@ func main() {
 
 	// Static and general stuff
 	r.Group(func(r chi.Router) {
-		r.Use(gm.Compress(5, "text/css", "text/javascript"))
-
 		r.Get("/favicon.ico", view.ServeFavicon)
 	})
 
