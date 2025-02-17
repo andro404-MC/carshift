@@ -18,23 +18,23 @@ templ SettingsAccount() {
 	<form method="post" class="grid gap-3 w-full sm:w-xs">
 		<div>
 			<div class="mb-1 text-sm">Username</div>
-			@c.InputUsername(u.Username)
+			@c.InputUsername(u.Username, false)
 		</div>
 		<div>
 			<div class="mb-1 text-sm">First name</div>
-			@c.InputBasic(u.Firstname, "First name", "firstname", 2, true)
+			@c.InputFirstName(u.Firstname, false)
 		</div>
 		<div>
 			<div class="mb-1 text-sm">Last name</div>
-			@c.InputBasic(u.Lastname, "Last name", "lastname", 2, false)
+			@c.InputLastName(u.Lastname, false)
 		</div>
 		<div>
 			<div class="mb-1 text-sm">Email</div>
-			@c.InputEmail(u.Email, "Email", "email")
+			@c.InputEmail(u.Email, false)
 		</div>
 		<div>
 			<div class="mb-1 text-sm">Phone number</div>
-			@c.InputPhone(u.Phone, "Phone number", "phone")
+			@c.InputPhone(u.Phone, false)
 		</div>
 	</form>
 }

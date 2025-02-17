@@ -6,17 +6,11 @@ templ Register() {
 	@Base("Register", true) {
 		<h1 class="text-4xl font-bold">Register</h1>
 		<form hx-post="/register" hx-target="#hxtoast" class="grid gap-2">
-			@c.InputUsername("") {
-				@c.Icon("user")
-			}
-			@c.InputBasic("", "First name", "firstname", 2, true) {
-				@c.Icon("id")
-			}
-			@c.InputBasic("", "Last name", "lastname", 2, false) {
-				@c.Icon("id")
-			}
-			@c.InputPassword("", "Password", "password", true)
-			@c.InputPassword("", "Password Confirmation", "passwordcon", false)
+			@c.InputUsername("", true)
+			@c.InputFirstName("", true)
+			@c.InputLastName("", true)
+			@c.InputPassword(true)
+			@c.InputPasswordCon(true)
 			<input type="submit" class="btn btn-primary" value="Register!"/>
 			<div class="text-center text-[12px]">
 				already registered ? <a href="/login" hx-boost="false" class="link link-primary">login</a>

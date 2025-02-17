@@ -1,32 +1,49 @@
 package component
 
-import "fmt"
-
-templ InputBasic(value string, placeholder string, name string, minlength int, required bool) {
+templ InputFirstName(v string, haveIco bool) {
 	<div>
 		<label class="w-full input validator">
-			{ children... }
+			if haveIco {
+				@Icon("id")
+			}
 			<input
 				type="text"
-				value={ value }
-				placeholder={ placeholder }
-				name={ name }
-				minlength={ fmt.Sprint(minlength) }
-				if required {
-					required
-				}
+				value={ v }
+				placeholder="First name"
+				name="firstname"
+				minlength="2"
+				required
 			/>
 		</label>
 	</div>
 }
 
-templ InputUsername(value string) {
+templ InputLastName(v string, haveIco bool) {
 	<div>
 		<label class="w-full input validator">
-			{ children... }
+			if haveIco {
+				@Icon("id")
+			}
 			<input
 				type="text"
-				value={ value }
+				value={ v }
+				placeholder="Last name"
+				name="lastname"
+				minlength="2"
+			/>
+		</label>
+	</div>
+}
+
+templ InputUsername(v string, haveIco bool) {
+	<div>
+		<label class="w-full input validator">
+			if haveIco {
+				@Icon("user")
+			}
+			<input
+				type="text"
+				value={ v }
 				placeholder="Username"
 				name="username"
 				minlength="4"
@@ -36,30 +53,35 @@ templ InputUsername(value string) {
 	</div>
 }
 
-templ InputEmail(value string, placeholder string, name string) {
+templ InputEmail(v string, haveIco bool) {
 	<div>
 		<label class="w-full input validator">
+			if haveIco {
+				@Icon("email")
+			}
 			<input
 				type="email"
-				value={ value }
-				placeholder={ placeholder }
-				name={ name }
+				value={ v }
+				placeholder="Email"
+				name="email"
 				required
 			/>
 		</label>
 	</div>
 }
 
-templ InputPhone(value string, placeholder string, name string) {
+templ InputPhone(v string, haveIco bool) {
 	<div>
 		<label class="w-full input validator">
+			if haveIco {
+				@Icon("email")
+			}
 			<input
 				type="tel"
-				value={ value }
-				placeholder={ placeholder }
-				name={ name }
+				value={ v }
+				placeholder="Phone number"
+				name="phone"
 				class="tabular-nums"
-				placeholder="Phone"
 				pattern="[0-9]*"
 				minlength="10"
 				maxlength="10"
@@ -68,34 +90,50 @@ templ InputPhone(value string, placeholder string, name string) {
 	</div>
 }
 
-templ InputPassword(value string, placeholder string, name string, fullValidator bool) {
+templ InputPassword(haveIco bool) {
 	<div>
 		<div class="w-full">
 			<label class="w-full input validator">
-				@Icon("key")
+				if haveIco {
+					@Icon("key")
+				}
 				<input
 					type="password"
-					value={ value }
-					placeholder={ placeholder }
+					placeholder="Password"
 					minlength="8"
-					if fullValidator {
-						pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-					}
-					name={ name }
+					pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+					name="password"
 					required
 				/>
 			</label>
-			if fullValidator {
-				<p class="hidden validator-hint">
-					Must be more than 8 characters, including
-					<br/>
-					At least one number
-					<br/>
-					At least one lowercase letter
-					<br/>
-					At least one uppercase letter
-				</p>
-			}
+			<p class="hidden validator-hint">
+				Must be more than 8 characters, including
+				<br/>
+				At least one number
+				<br/>
+				At least one lowercase letter
+				<br/>
+				At least one uppercase letter
+			</p>
+		</div>
+	</div>
+}
+
+templ InputPasswordCon(haveIco bool) {
+	<div>
+		<div class="w-full">
+			<label class="w-full input validator">
+				if haveIco {
+					@Icon("key")
+				}
+				<input
+					type="password"
+					placeholder="Password confirmation"
+					minlength="8"
+					name="passwordcon"
+					required
+				/>
+			</label>
 		</div>
 	</div>
 }
