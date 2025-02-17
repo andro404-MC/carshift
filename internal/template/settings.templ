@@ -18,15 +18,15 @@ templ SettingsAccount() {
 	<form method="post" class="grid gap-3 w-full sm:w-xs">
 		<div>
 			<div class="mb-1 text-sm">Username</div>
-			@c.InputBasic(u.Username, "Username", "username", 4)
+			@c.InputUsername(u.Username)
 		</div>
 		<div>
 			<div class="mb-1 text-sm">First name</div>
-			@c.InputBasic(u.Firstname, "First name", "firstname", 2)
+			@c.InputBasic(u.Firstname, "First name", "firstname", 2, true)
 		</div>
 		<div>
 			<div class="mb-1 text-sm">Last name</div>
-			@c.InputBasic(u.Lastname, "Last name", "lastname", 2)
+			@c.InputBasic(u.Lastname, "Last name", "lastname", 2, false)
 		</div>
 		<div>
 			<div class="mb-1 text-sm">Email</div>

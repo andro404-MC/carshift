@@ -12,8 +12,11 @@ func ValidateUsername(t string) bool {
 	return usernamePattern.MatchString(t)
 }
 
-func ValidateName(t string) bool {
+func ValidateName(t string, IsNullable bool) bool {
 	if len(strings.TrimSpace(t)) < 2 {
+		if IsNullable {
+			return true
+		}
 		return false
 	}
 	for _, char := range t {

@@ -38,7 +38,7 @@ func HandlePostRegister(w http.ResponseWriter, r *http.Request) {
 	passwordcon := r.FormValue("passwordcon")
 
 	// Check if all data is provided
-	if username == "" || firstname == "" || lastname == "" || password == "" || passwordcon == "" {
+	if username == "" || firstname == "" || password == "" || passwordcon == "" {
 		template.AlertError("missing data").Render(r.Context(), w)
 		return
 	}
@@ -54,7 +54,7 @@ func HandlePostRegister(w http.ResponseWriter, r *http.Request) {
 	lastname = misc.FormaterName(lastname)
 
 	// Verifying first & last name
-	if !misc.ValidateName(firstname) || !misc.ValidateName(lastname) {
+	if !misc.ValidateName(firstname, false) || !misc.ValidateName(lastname, true) {
 		template.AlertError("invalid first or lastname").Render(r.Context(), w)
 		return
 	}
@@ -97,7 +97,7 @@ func HandlePostRegister(w http.ResponseWriter, r *http.Request) {
 		Passhash:  string(hashedPassword),
 	}
 
-	err = db.AddUser(u)
+	err = db.AddUser(&u)
 	if err != nil {
 		log.Printf("DB: Error creating user: %v", err)
 		template.AlertError("internal error").Render(r.Context(), w)

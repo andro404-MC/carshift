@@ -2,8 +2,8 @@ package db
 
 import "github.com/untemi/carshift/internal/misc"
 
-func AddUser(u User) error {
-	return db.Create(u).Error
+func AddUser(u *User) error {
+	return db.Create(&u).Error
 }
 
 func IsUserExists(username string) (bool, error) {

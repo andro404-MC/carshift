@@ -2,7 +2,7 @@ package component
 
 import "fmt"
 
-templ InputBasic(value string, placeholder string, name string, minlength int) {
+templ InputBasic(value string, placeholder string, name string, minlength int, required bool) {
 	<div>
 		<label class="w-full input validator">
 			{ children... }
@@ -12,6 +12,24 @@ templ InputBasic(value string, placeholder string, name string, minlength int) {
 				placeholder={ placeholder }
 				name={ name }
 				minlength={ fmt.Sprint(minlength) }
+				if required {
+					required
+				}
+			/>
+		</label>
+	</div>
+}
+
+templ InputUsername(value string) {
+	<div>
+		<label class="w-full input validator">
+			{ children... }
+			<input
+				type="text"
+				value={ value }
+				placeholder="Username"
+				name="username"
+				minlength="4"
 				required
 			/>
 		</label>
