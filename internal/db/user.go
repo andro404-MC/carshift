@@ -20,3 +20,10 @@ func (u *User) Fill() error {
 
 	return misc.ErrNoIdentifier
 }
+
+func FetchUsers(query string, limit int, page int) (*[]User, error) {
+	var users *[]User
+	tx := db.Limit(limit).Offset(page*limit).Where("Username LIKE ?", query).Find(&users)
+
+	return users, tx.Error
+}

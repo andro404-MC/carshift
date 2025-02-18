@@ -52,8 +52,9 @@ func main() {
 
 		r.Get("/", h.GEThome)
 		r.Get("/profile/{username}", h.GETprofile)
-
-		r.Get("/carfiner", h.GETcarFiner)
+		r.Get("/carfinder", h.GETcarFinder)
+		r.Get("/userfinder", h.GETuserFinder)
+		r.Post("/userfinder", h.POSTuserFinder)
 	})
 
 	// User routes

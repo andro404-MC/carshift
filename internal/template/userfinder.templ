@@ -1,0 +1,56 @@
+package template
+
+import "github.com/untemi/carshift/internal/db"
+
+import c "github.com/untemi/carshift/internal/component"
+
+templ UserFinder() {
+	@Base("Home", false) {
+		<div class="pt-[64px]"></div>
+		<form
+			hx-post="/userfinder"
+			hx-swap="innerHTML"
+			hx-target="#hx-results"
+			class="flex flex-col p-3 m-3 mb-1 grow card bg-base-200"
+		>
+			<div class="join">
+				<div class="w-full">
+					<label class="w-full input join-item">
+						<div>
+							@c.IconMini("at")
+						</div>
+						<input
+							required
+							autocomplete="off"
+							placeholder="Username"
+							name="username"
+							type="text"
+						/>
+					</label>
+				</div>
+				<button class="btn btn-secondary join-item">Search</button>
+			</div>
+		</form>
+		<div class="flex flex-col gap-1 py-2 px-3" id="hx-results"></div>
+	}
+}
+
+templ UserFinderResults(users *[]db.User) {
+	for _, v := range *users {
+		{{ iurl := "https://ui-avatars.com/api/?name=" + v.Firstname + " " + v.Lastname }}
+		{{ plink := templ.URL("/profile/" + v.Username) }}
+		<a href={ plink } class="flex flex-row gap-3 py-3 h-fit btn btn-ghost">
+			<div class="avatar">
+				<div class="w-12 h-12 mask mask-squircle">
+					<img
+						src={ iurl }
+					/>
+				</div>
+			</div>
+			<div class="text-left grow">
+				<div class="font-bold">{ v.Firstname + " " + v.Lastname }</div>
+				<div class="text-sm opacity-50">{ v.Username }</div>
+			</div>
+		</a>
+	}
+}
