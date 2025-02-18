@@ -14,11 +14,11 @@ import (
 
 var loginDisable = 0
 
-func HandleRegister(w http.ResponseWriter, r *http.Request) {
+func GETregister(w http.ResponseWriter, r *http.Request) {
 	template.Register().Render(r.Context(), w)
 }
 
-func HandlePostRegister(w http.ResponseWriter, r *http.Request) {
+func POSTregister(w http.ResponseWriter, r *http.Request) {
 	if loginDisable == 1 {
 		template.AlertError("Login Disabled").Render(r.Context(), w)
 		return

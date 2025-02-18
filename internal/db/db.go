@@ -14,7 +14,7 @@ var (
 	}
 )
 
-func Setup() error {
+func Init() error {
 	var err error
 	db, err = gorm.Open(sqlite.Open("app.db"), dbConf)
 	if err != nil {

@@ -14,7 +14,7 @@ import (
 
 var SM = scs.New()
 
-func Setup() error {
+func Init() error {
 	db, err := sql.Open("sqlite3", "session.db")
 	if err != nil {
 		return err
@@ -30,7 +30,7 @@ func Setup() error {
 		return err
 	}
 
-	if db.Exec("CREATE INDEX IF NOT EXISTS sessions_expiry_idx ON sessions(expiry)"); err != nil {
+	if _, err := db.Exec("CREATE INDEX IF NOT EXISTS sessions_expiry_idx ON sessions(expiry)"); err != nil {
 		return err
 	}
 

@@ -11,11 +11,11 @@ import (
 	"github.com/untemi/carshift/internal/template"
 )
 
-func HandleLogin(w http.ResponseWriter, r *http.Request) {
+func GETlogin(w http.ResponseWriter, r *http.Request) {
 	template.Login().Render(r.Context(), w)
 }
 
-func HandlePostLogin(w http.ResponseWriter, r *http.Request) {
+func POSTlogin(w http.ResponseWriter, r *http.Request) {
 	if loginDisable == 1 {
 		template.AlertError("Login Disabled").Render(r.Context(), w)
 		return

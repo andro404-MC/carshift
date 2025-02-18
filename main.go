@@ -23,12 +23,12 @@ func main() {
 	flag.Parse()
 
 	// Setup
-	if err = db.Setup(); err != nil {
+	if err = db.Init(); err != nil {
 		log.Printf("DB: Error fetching user %v", err)
 		return
 	}
 
-	if err = h.Setup(); err != nil {
+	if err = h.Init(); err != nil {
 		log.Printf("SM: Error fetching user %v", err)
 		return
 	}
@@ -50,8 +50,10 @@ func main() {
 	r.Group(func(r chi.Router) {
 		r.Use(m.FetchLogin)
 
-		r.Get("/", h.HandleHome)
-		r.Get("/profile/{username}", h.HandleProfile)
+		r.Get("/", h.GEThome)
+		r.Get("/profile/{username}", h.GETprofile)
+
+		r.Get("/carfiner", h.GETcarFiner)
 	})
 
 	// User routes
@@ -59,19 +61,19 @@ func main() {
 		r.Use(m.FetchLogin, m.UserOnly)
 
 		r.Get("/logout", h.EndSession)
-		r.Get("/me", h.HandleProfileSelf)
-		r.Get("/settings", h.HandleSettings)
-		r.Get("/settings/{tab}", h.HandleSettingsTabs)
+		r.Get("/me", h.GETprofileSelf)
+		r.Get("/settings", h.GETsettings)
+		r.Get("/settings/{tab}", h.GETsettingsTabs)
 	})
 
 	// Guest routes
 	r.Group(func(r chi.Router) {
 		r.Use(m.FetchLogin, m.GuestOnly)
 
-		r.Get("/login", h.HandleLogin)
-		r.Get("/register", h.HandleRegister)
-		r.Post("/login", h.HandlePostLogin)
-		r.Post("/register", h.HandlePostRegister)
+		r.Get("/login", h.GETlogin)
+		r.Get("/register", h.GETregister)
+		r.Post("/login", h.POSTlogin)
+		r.Post("/register", h.POSTregister)
 	})
 
 	// Files serving

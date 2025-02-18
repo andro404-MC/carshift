@@ -12,11 +12,11 @@ var tabs = []template.Tab{
 	{Name: "Profile", Content: template.AlertError("Chkon 3raf"), URL: "/settings/1"},
 }
 
-func HandleSettings(w http.ResponseWriter, r *http.Request) {
+func GETsettings(w http.ResponseWriter, r *http.Request) {
 	template.Settings().Render(r.Context(), w)
 }
 
-func HandleSettingsTabs(w http.ResponseWriter, r *http.Request) {
+func GETsettingsTabs(w http.ResponseWriter, r *http.Request) {
 	// cool but need better
 	isHTMX := r.Header.Get("HX-Request")
 	if isHTMX != "true" {
