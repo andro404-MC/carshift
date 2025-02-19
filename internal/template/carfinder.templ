@@ -2,12 +2,10 @@ package template
 
 templ CarFinder() {
 	@Base("Home", false) {
-		<script src="/static/js/pikaday.js"></script>
-		<script src="/static/js/moment.js"></script>
 		<div class="pt-[64px]"></div>
 		<form hx-get="/htmx/alert" hx-target="#hx-results" hx-swap="beforebegin" class="flex flex-col p-3 m-3 grow card bg-base-200">
-			<div class="join join-vertical sm:join-horizontal">
-				<select name="district" class="w-full sm:w-36 sm:rounded-l-full select select-warning join">
+			<div x-init="Pikabo()" class="join join-vertical sm:join-horizontal">
+				<select name="district" class="w-full sm:w-36 sm:rounded-l-full select select-warning">
 					<option disabled selected>District</option>
 					<option>Aïn Chock</option>
 					<option>Aïn Sebaâ</option>
@@ -19,19 +17,19 @@ templ CarFinder() {
 				</select>
 				<input
 					type="text"
-					class="w-full text-center sm:w-28 input pika-single join"
+					class="w-full text-center sm:w-28 input pika-single"
 					placeholder="Start date"
 					id="startdate"
 				/>
 				<input
 					type="text"
-					class="w-full text-center sm:w-28 input pika-single join"
+					class="w-full text-center sm:w-28 input pika-single"
 					placeholder="End date"
 					id="enddate"
 				/>
 				<div class="w-full">
 					<label class="w-full input join-item">
-						<input autocomplete="off" name="message" type="text"/>
+						<input autocomplete="off" placeholder="Search" name="message" type="text"/>
 					</label>
 				</div>
 				<button class="btn btn-secondary join-item">Search</button>
@@ -39,15 +37,15 @@ templ CarFinder() {
 		</form>
 		<div id="hx-results"></div>
 		<script>
-      document.addEventListener("htmx:afterSettle", () => {
-      const options = {
-        toString: (date, format) => moment(date).format(format),
-        format: 'DD-MM-YYYY',
-      };
+      function Pikabo() {
+        var options = {
+          toString: (date, format) => moment(date).format(format),
+          format: 'DD-MM-YYYY'
+        };
 
-      new Pikaday({ field: document.getElementById('startdate'), ...options });
-      new Pikaday({ field: document.getElementById('enddate'), ...options });
-    });
+        new Pikaday({ field: document.getElementById('startdate'), ...options });
+        new Pikaday({ field: document.getElementById('enddate'), ...options });
+      };
     </script>
 	}
 }
