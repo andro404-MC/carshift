@@ -39,7 +39,7 @@ templ CarFinder() {
 		<script>
       function Pikabo() {
         var options = {
-          toString: (date, format) => moment(date).format(format),
+          toString: (date, format) => dayjs(date).format(format),
           format: 'DD-MM-YYYY'
         };
 
