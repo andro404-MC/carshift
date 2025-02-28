@@ -52,7 +52,10 @@ func main() {
 
 		r.Get("/", h.GEThome)
 		r.Get("/profile/{username}", h.GETprofile)
+
 		r.Get("/carfinder", h.GETcarFinder)
+		r.Post("/carfinder", h.POSTcarFinder)
+
 		r.Get("/userfinder", h.GETuserFinder)
 		r.Post("/userfinder", h.POSTuserFinder)
 	})

@@ -3,6 +3,7 @@ package handler
 import (
 	"log"
 	"net/http"
+	"strconv"
 
 	"github.com/untemi/carshift/internal/db"
 	"github.com/untemi/carshift/internal/template"
@@ -13,24 +14,38 @@ func GETuserFinder(w http.ResponseWriter, r *http.Request) {
 }
 
 func POSTuserFinder(w http.ResponseWriter, r *http.Request) {
+	page := 0
 	err := r.ParseForm()
 	if err != nil {
-		template.AlertError("bad data").Render(r.Context(), w)
+		reTargetAlert("bad data", w, r)
 		return
 	}
 
 	query := r.FormValue("username")
-	if query == "" {
-		template.AlertError("missing data").Render(r.Context(), w)
-	}
+	pageStr := r.FormValue("page")
 
-	query = "%" + query + "%"
-	users, err := db.FetchUsers(query, 10, 0)
-	if err != nil {
-		log.Printf("DB: Error fetching users: %v", err)
-		template.AlertError("internal error").Render(r.Context(), w)
+	if query == "" {
+		reTargetAlert("missing data", w, r)
 		return
 	}
 
-	template.UserFinderResults(users).Render(r.Context(), w)
+	if pageStr != "" {
+		page, _ = strconv.Atoi(pageStr)
+	}
+
+	query = "%" + query + "%"
+	users, err := db.FetchUsers(query, 10, page)
+	if err != nil {
+		log.Printf("DB: Error fetching users: %v", err)
+		reTargetAlert("internal error", w, r)
+		return
+	}
+
+	template.UserFinderResults(users, r.FormValue("username"), page).Render(r.Context(), w)
+}
+
+func reTargetAlert(message string, w http.ResponseWriter, r *http.Request) {
+	w.Header().Add("HX-Retarget", "#hxtoast")
+	w.Header().Add("HX-Reswap", "innerHTML")
+	template.AlertError(message).Render(r.Context(), w)
 }

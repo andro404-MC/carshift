@@ -1,9 +1,16 @@
 package template
 
+import "github.com/untemi/carshift/internal/db"
+
 templ CarFinder() {
-	@Base("Home", false) {
+	@Base("Car Finder", false) {
 		<div class="pt-[64px]"></div>
-		<form hx-get="/htmx/alert" hx-target="#hx-results" hx-swap="beforebegin" class="flex flex-col p-3 m-3 grow card bg-base-200">
+		<form
+			hx-post="/carfinder"
+			hx-target="#hx-results"
+			hx-swap="innerHTML"
+			class="flex flex-col p-3 m-3 grow card bg-base-200"
+		>
 			<div x-init="Pikabo()" class="join join-vertical sm:join-horizontal">
 				<select name="district" class="w-full sm:w-36 sm:rounded-l-full select select-warning">
 					<option disabled selected>District</option>
@@ -16,16 +23,18 @@ templ CarFinder() {
 					<option>Sidi Bernoussi</option>
 				</select>
 				<input
+					id="startdate"
 					type="text"
 					class="w-full text-center sm:w-28 input pika-single"
 					placeholder="Start date"
-					id="startdate"
+					name="startdate"
 				/>
 				<input
+					id="enddate"
 					type="text"
 					class="w-full text-center sm:w-28 input pika-single"
 					placeholder="End date"
-					id="enddate"
+					name="enddate"
 				/>
 				<div class="w-full">
 					<label class="w-full input join-item">
@@ -48,4 +57,10 @@ templ CarFinder() {
       };
     </script>
 	}
+}
+
+templ CarFinderResults(users *[]db.Car) {
+	<div>
+		We poor ok
+	</div>
 }
