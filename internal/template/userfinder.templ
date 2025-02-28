@@ -1,33 +1,36 @@
 package template
 
-import "github.com/untemi/carshift/internal/db"
-import "fmt"
-
-import c "github.com/untemi/carshift/internal/component"
+import (
+	"github.com/untemi/carshift/internal/db"
+	"fmt"
+	c "github.com/untemi/carshift/internal/component"
+)
 
 templ UserFinder() {
 	@Base("User Finder", false) {
 		<div class="pt-[64px]"></div>
 		<form
 			hx-post="/userfinder"
-			hx-target="#hx-results"
 			hx-swap="innerHTML"
-			hx-trigger="input changed delay:200ms, keyup[key=='Enter'], load"
+			hx-target="#hx-results"
 			class="flex flex-col p-3 m-3 mb-1 grow card bg-base-200"
 		>
-			<div class="w-full">
-				<label class="w-full input">
-					<div>
-						@c.IconMini("at")
-					</div>
-					<input
-						required
-						autocomplete="off"
-						placeholder="Username"
-						name="username"
-						type="text"
-					/>
-				</label>
+			<div class="join">
+				<div class="w-full">
+					<label class="w-full input join-item">
+						<div>
+							@c.IconMini("at")
+						</div>
+						<input
+							required
+							autocomplete="off"
+							placeholder="Username"
+							name="username"
+							type="text"
+						/>
+					</label>
+				</div>
+				<button class="btn btn-secondary join-item">Search</button>
 			</div>
 		</form>
 		<div class="flex flex-col gap-1 py-2 px-3" id="hx-results"></div>
